@@ -1,8 +1,9 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState } from 'react'
+import { useLocalStorage } from '../hooks/useLocalStorage'
 
 interface User {
-	userID: string
-	username: string
+  userID: string
+  username: string
 }
 
 interface UserContext {
@@ -11,27 +12,36 @@ interface UserContext {
   logout: () => void
 }
 
-export const UserContext = createContext<UserContext | null>(null);
+export const UserContext = createContext<UserContext | null>(null)
 
-export const UserProvider = ({ children }: {children: React.ReactElement}) => {
-  const [userLogged, setUserLogged] = useState<User | null>(null);
+export const UserProvider = ({
+  children,
+}: {
+  children: React.ReactElement
+}) => {
+  const [userInStorage, setUserInStorage] = useLocalStorage('userID', '')
+  const [userLogged, setUserLogged] = useState<User | null>(
+    userInStorage ?? null
+  )
 
   const login = (user: User) => {
-    setUserLogged(user);
-  };
+    setUserLogged(user)
+    setUserInStorage(user)
+  }
 
   const logout = () => {
-    setUserLogged(null);
-  };
+    window.localStorage.clear()
+    setUserLogged(null)
+  }
 
-  const value = { userLogged, login, logout };
-  return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
-};
+  const value = { userLogged, login, logout }
+  return <UserContext.Provider value={value}>{children}</UserContext.Provider>
+}
 
 export const useUser = () => {
-  const context = useContext(UserContext);
+  const context = useContext(UserContext)
   if (!context) {
-    throw new Error("useUser must be used with in a UserProvider");
+    throw new Error('useUser must be used with in a UserProvider')
   }
-  return context;
-};
+  return context
+}

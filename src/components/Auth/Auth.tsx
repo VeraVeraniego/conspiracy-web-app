@@ -12,6 +12,7 @@ import {
   SubmitWrapper,
   Wrapper,
 } from '../../common/styled'
+import { API_URL } from '../../common/constants'
 
 export interface LoginRequest {
   username: string
@@ -34,10 +35,10 @@ export const Auth = ({ children }: AuthProps) => {
   const [error, setError] = useState(false)
 
   const loginRequest = async (data: LoginRequest) => {
-    const response = await axios.post<LoginResponse>(
-      `http://127.0.0.1:8080/login`,
-      { username: data.username, password: data.password }
-    )
+    const response = await axios.post<LoginResponse>(`${API_URL}/login`, {
+      username: data.username,
+      password: data.password,
+    })
 
     login({ userID: response.data.id, username: response.data.fullName })
   }

@@ -1,5 +1,6 @@
 import axios from 'axios'
 import React, { createContext, useContext, useState } from 'react'
+import { API_URL } from '../common/constants'
 
 interface ScoreContext {
   score: number
@@ -17,7 +18,7 @@ export const ScoreProvider = ({
 
   const myEventsRequest = async (userId: string) => {
     const response = await axios.get<{ score: number }>(
-      `http://127.0.0.1:8080/score?userId=${userId}`
+      `${API_URL}/score?userId=${userId}`
     )
 
     setScore(response.data.score)

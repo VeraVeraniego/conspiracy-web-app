@@ -11,6 +11,7 @@ import { useUser } from '../../../context/User'
 import { useChannel } from '../../../context/Channel'
 import { useNavigate } from 'react-router-dom'
 import { useScore } from '../../../context/Score'
+import { API_URL } from '../../../common/constants'
 
 type Event = {
   id: string
@@ -40,7 +41,7 @@ export const Events = () => {
 
   const myEventsRequest = async (userId: string) => {
     const response = await axios.get<Event[]>(
-      `http://127.0.0.1:8080/event-subscriptions?userId=${userId}`
+      `${API_URL}/event-subscriptions?userId=${userId}`
     )
     const filteredEvents = response.data.filter(
       (item) => item.channel === channel
@@ -56,12 +57,12 @@ export const Events = () => {
   }
 
   const comingEventsRequest = async (userId: string) => {
-    const response = await axios.get<Event[]>(`http://127.0.0.1:8080/list`, {
+    const response = await axios.get<Event[]>(`${API_URL}/list`, {
       params: { startDate: new Date(), endDate: addWeeks(2), channel: channel },
     })
 
     const newEventsJoined = await axios.get<Event[]>(
-      `http://127.0.0.1:8080/event-subscriptions?userId=${userId}`
+      `${API_URL}/event-subscriptions?userId=${userId}`
     )
 
     setEvents(response.data)
@@ -70,7 +71,7 @@ export const Events = () => {
   }
 
   const pastEventsRequest = async () => {
-    const response = await axios.get<Event[]>(`http://127.0.0.1:8080/list`, {
+    const response = await axios.get<Event[]>(`${API_URL}/list`, {
       params: {
         startDate: addWeeks(-2),
         endDate: new Date(),
@@ -82,7 +83,7 @@ export const Events = () => {
   }
 
   const joinEvent = async (eventId: string) => {
-    const response = await axios.post<Event>(`http://127.0.0.1:8080/attend`, {
+    const response = await axios.post<Event>(`${API_URL}/attend`, {
       eventId,
       userId: userLogged?.userID,
     })

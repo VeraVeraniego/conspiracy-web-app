@@ -2,6 +2,7 @@ import axios from 'axios'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
+import { API_URL } from '../../common/constants'
 import {
   StyledHelper,
   StyledInput,
@@ -26,7 +27,7 @@ export const CreateEvent = () => {
     console.log(eventName, channel, eventDate)
     try {
       if (userLogged) {
-        const response = await axios.post(`http://127.0.0.1:8080/createEvent`, {
+        const response = await axios.post(`${API_URL}/createEvent`, {
           eventName: eventName,
           eventDate: eventDate,
           eventPlanner: userLogged.userID,

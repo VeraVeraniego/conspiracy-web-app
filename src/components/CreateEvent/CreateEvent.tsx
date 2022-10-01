@@ -9,29 +9,30 @@ import {
   SubmitButton,
   SubmitWrapper,
 } from '../../common/styled'
+import { useUser } from '../../context/User'
 import { theme } from '../../theme/globalStyle'
-const channels = ['Arequipa', 'Perú', 'Lima', 'El Salvador']
+const channels = ['Arequipa', 'Peru', 'Lima', 'El Salvador', 'RAVN']
 export const CreateEvent = () => {
   const [eventName, setEventName] = useState('')
   const [channel, setChannel] = useState('')
   const [eventDate, setEventDate] = useState('')
   const navigate = useNavigate()
+  const { userLogged } = useUser()
 
   async function submitHandler(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     console.log(eventName, channel, eventDate)
     try {
-      const response = await axios.post(
-        `https://fda5-190-237-34-153.ngrok.io/createEvent`,
-        {
+      if (userLogged) {
+        const response = await axios.post(`http://127.0.0.1:8080/createEvent`, {
           eventName: eventName,
           eventDate: eventDate,
-          eventPlanner: 'b1b7d495-80df-4bfe-95ea-07f89e584adb',
+          eventPlanner: userLogged.userID,
           channel: channel,
-        }
-      )
-      console.log('response', response)
-      if (response.data) navigate('/')
+        })
+        console.log('response', response)
+        if (response.data) navigate('/')
+      }
     } catch (error) {
       const err = error as Error
       console.error(err.message)
@@ -73,7 +74,7 @@ export const CreateEvent = () => {
         />
       </StyledLabel>
       <ButtonWrapper>
-        <CancelButton type="reset">Cancel</CancelButton>
+        <CancelButton onClick={() => navigate('/')}>Cancel</CancelButton>
         <SubmitButton type="submit">Create Event</SubmitButton>
       </ButtonWrapper>
     </FormWrapper>

@@ -249,12 +249,13 @@ const CardUserInfoPoints = styled.h2`
   color: ${theme.palette.gray.zero};
 `
 
-const CadrUserInfoPicture = styled.div`
-  width: 40px;
-  height: 40px;
+export const CardUserInfoPicture = styled.div<{ size?: number }>`
+  width: ${(props) => (props.size ? props.size : 40)}px;
+  height: ${(props) => (props.size ? props.size : 40)}px;
   border-radius: 50%;
   border: 2px solid ${theme.palette.gray.zero};
   overflow: hidden;
+  z-index: 15;
 
   & img {
     width: 100%;

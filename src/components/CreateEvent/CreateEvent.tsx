@@ -73,6 +73,7 @@ export const CreateEvent = () => {
         <StyledHelper>Date</StyledHelper>
         <StyledInput
           type="datetime-local"
+          min={new Date().toISOString().split('T')[0] + 'T00:00:00.00'}
           onChange={(e) => setEventDate(e.target.value)}
           required
         />

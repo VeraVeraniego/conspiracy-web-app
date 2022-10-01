@@ -21,7 +21,7 @@ export const StyledInput = styled.input`
   font-weight: 400;
   line-height: 18px;
   background-color: ${theme.palette.black.minus4};
-  color: ${theme.palette.text.gray};
+  color: ${theme.palette.text.white};
   border: none;
   outline: none;
 
@@ -42,8 +42,8 @@ export const SubmitWrapper = styled.div`
 
 export const SubmitButton = styled.button`
   background-color: ${theme.palette.primary.zero};
-  border-radius: 12px;
   color: ${theme.palette.text.white};
+  border-radius: 12px;
   padding: 12px 32px;
   outline: none;
   border: none;

@@ -67,7 +67,6 @@ export const Auth = ({ children }: AuthProps) => {
     </AuthWrapper>
   )
 }
-
 const AuthWrapper = styled.div`
   width: 100%;
   height: 100vh;

@@ -1,7 +1,5 @@
 import React from 'react'
 
 export const EventDetails = () => {
-	return (
-		<div>EventDetails</div>
-	)
+  return <div>EventDetails</div>
 }

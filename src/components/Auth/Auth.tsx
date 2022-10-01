@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { useUser } from '../../context/User'
 import { Logo } from '../../assets/Logo'
 import backImage from './loginback.png'
+import { theme } from '../../theme/globalStyle'
 interface AuthProps {
   children: React.ReactElement
 }
@@ -30,11 +31,12 @@ export const Auth = ({ children }: AuthProps) => {
             <Logo />
           </LogoWrapper>
           <StyledLabel>
-            <StyledHelper>Email</StyledHelper>
+            <StyledHelper>User</StyledHelper>
             <StyledInput
               type="email"
               value={userEmail}
               onChange={(event) => setUserEmail(event.target.value)}
+              placeholder="huginn@ravn.co"
             />
           </StyledLabel>
           <StyledLabel>
@@ -43,10 +45,13 @@ export const Auth = ({ children }: AuthProps) => {
               type="password"
               value={userPassword}
               onChange={(event) => setUserPassword(event.target.value)}
+              placeholder="write your password here"
             />
           </StyledLabel>
           <SubmitWrapper>
-            <SubmitButton type="submit">Login</SubmitButton>
+            <SubmitButton type="submit">
+              <h4>Log in</h4>
+            </SubmitButton>
           </SubmitWrapper>
         </LoginCard>
       </LoginCardWrapper>
@@ -99,31 +104,42 @@ const StyledLabel = styled.label`
   gap: 4px;
 `
 
-const StyledHelper = styled.h4``
+const StyledHelper = styled.h4`
+  color: ${theme.palette.text.gray};
+`
 
 const StyledInput = styled.input`
   width: 100%;
   height: 48px;
+  padding: 0px 16px;
   border-radius: 8px;
   font-size: 16px;
   font-weight: 400;
   line-height: 18px;
-  -webkit-appearance: none;
+  background-color: ${theme.palette.black.minus4};
+  color: ${theme.palette.text.gray};
+  border: none;
+  outline: none;
 
-  &:focus,
-  &:hover {
-    border: none;
-    outline: none;
+  &::placeholder {
+    color: ${theme.palette.text.grayPlusOne};
+  }
+
+  &:hover,
+  &:focus {
   }
 `
 
 const SubmitWrapper = styled.div`
   width: 100%;
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
 `
 
 const SubmitButton = styled.button`
-  border: 1px solid black;
-  padding: 8px 16px;
+  background-color: transparent;
+  border: 2px solid ${theme.palette.primary.zero};
+  border-radius: 12px;
+  color: ${theme.palette.primary.zero};
+  padding: 12px 32px;
 `

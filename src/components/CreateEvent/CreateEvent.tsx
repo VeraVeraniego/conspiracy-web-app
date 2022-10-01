@@ -100,7 +100,9 @@ const ButtonWrapper = styled(SubmitWrapper)`
   gap: 16px;
 `
 const FormWrapper = styled.form`
-  padding-top: 214px;
+  display: flex;
+  justify-content: center;
+  flex: 1;
   width: 512px;
   display: flex;
   flex-direction: column;

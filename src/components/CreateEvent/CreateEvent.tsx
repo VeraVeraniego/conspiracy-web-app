@@ -67,7 +67,7 @@ export const CreateEvent = () => {
       <StyledLabel>
         <StyledHelper>Date</StyledHelper>
         <StyledInput
-          type="date"
+          type="datetime-local"
           onChange={(e) => setEventDate(e.target.value)}
           required
         />

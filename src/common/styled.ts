@@ -1,6 +1,13 @@
 import styled from 'styled-components'
 import { theme } from '../theme/globalStyle'
 
+export const Wrapper = styled.div`
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`
 export const StyledLabel = styled.label`
   width: 100%;
   display: flex;

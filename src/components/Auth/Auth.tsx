@@ -11,6 +11,7 @@ import {
   StyledLabel,
   SubmitButton,
   SubmitWrapper,
+  Wrapper,
 } from '../../common/styled'
 
 export interface LoginRequest {
@@ -59,7 +60,7 @@ export const Auth = ({ children }: AuthProps) => {
   }
 
   return (
-    <AuthWrapper>
+    <Wrapper>
       <ImageWrapper />
       <LoginCardWrapper>
         <LoginCard method="POST" onSubmit={onLoginSubmit}>
@@ -93,16 +94,9 @@ export const Auth = ({ children }: AuthProps) => {
           </SubmitWrapper>
         </LoginCard>
       </LoginCardWrapper>
-    </AuthWrapper>
+    </Wrapper>
   )
 }
-const AuthWrapper = styled.div`
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`
 
 const ImageWrapper = styled.div`
   flex: 1;

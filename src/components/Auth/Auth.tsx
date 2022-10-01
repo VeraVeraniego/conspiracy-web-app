@@ -36,7 +36,7 @@ export const Auth = ({ children }: AuthProps) => {
 
   const loginRequest = async (data: LoginRequest) => {
     const response = await axios.post<LoginResponse>(
-      `https://97b6-190-237-34-153.ngrok.io/login`,
+      `http://localhost:8080/login`,
       { username: data.username, password: data.password }
     )
 

@@ -8,7 +8,7 @@ export const SelectDropdown = () => {
   const [isOptionsOpen, setIsOptionsOpen] = useState(false)
   const { channel, selectChannel } = useChannel()
 
-  const optionsList = ['Arequipa', 'El Salvador', 'RAVN']
+  const optionsList = ['Arequipa', 'El Salvador', 'RAVN', 'Peru', 'Lima']
 
   const toggleOptions = () => {
     setIsOptionsOpen(!isOptionsOpen)

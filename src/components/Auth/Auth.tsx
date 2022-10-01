@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import { useUser } from '../../context/User'
 import { Logo } from '../../assets/Logo'
 import backImage from './loginback.png'
-import { theme } from '../../theme/globalStyle'
 import axios from 'axios'
 import {
   StyledHelper,

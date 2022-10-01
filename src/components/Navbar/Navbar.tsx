@@ -5,8 +5,11 @@ import { theme } from '../../theme/globalStyle'
 import { Logo } from '../../assets/Logo'
 import placeholderImage from '../../assets/images/profileplaceholder.png'
 import { SelectDropdown } from './SelectDropdown'
+import { useUser } from '../../context/User'
 
 export const Navbar = () => {
+  const { userLogged } = useUser()
+
   return (
     <NavbarGeneralContainer>
       <NavbarWrapper>

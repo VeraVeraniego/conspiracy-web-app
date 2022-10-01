@@ -1,26 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import AppRouter from './AppRouter'
+import styled from 'styled-components'
+import { UserProvider } from './context/User'
+import { ChannelProvider } from './context/Channel'
+import { Auth } from './components/Auth/Auth'
+import { GlobalStyle } from './theme/globalStyle'
+import { theme } from './theme/globalStyle'
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <MainWrapper className="App">
+      <GlobalStyle />
+      <UserProvider>
+        <ChannelProvider>
+          <Auth>
+            <AppRouter />
+          </Auth>
+        </ChannelProvider>
+      </UserProvider>
+    </MainWrapper>
+  )
 }
 
-export default App;
+export default App
+
+const MainWrapper = styled.div`
+  width: 100%;
+  min-height: 100vh;
+  background-color: ${theme.palette.black.minus1};
+`

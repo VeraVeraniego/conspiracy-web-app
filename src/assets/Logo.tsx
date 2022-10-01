@@ -1,10 +1,9 @@
 import React from 'react'
+import styled from 'styled-components'
 
 export const Logo = () => {
   return (
-    <svg
-      width="332"
-      height="60"
+    <StyledSVG
       viewBox="0 0 332 60"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -77,6 +76,11 @@ export const Logo = () => {
         d="M269.621 56.5068C270.839 56.5068 271.826 55.5198 271.826 54.3022C271.826 53.0847 270.839 52.0976 269.621 52.0976C268.404 52.0976 267.416 53.0847 267.416 54.3022C267.416 55.5198 268.404 56.5068 269.621 56.5068Z"
         fill="#ADB5BD"
       />
-    </svg>
+    </StyledSVG>
   )
 }
+
+const StyledSVG = styled.svg`
+  width: 100%;
+  height: auto;
+`

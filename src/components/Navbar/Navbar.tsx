@@ -6,9 +6,11 @@ import { Logo } from '../../assets/Logo'
 import placeholderImage from '../../assets/images/profileplaceholder.png'
 import { SelectDropdown } from './SelectDropdown'
 import { useScore } from '../../context/Score'
+import { useUser } from '../../context/User'
 
 export const Navbar = () => {
   const { score } = useScore()
+  const { logout } = useUser()
 
   return (
     <NavbarGeneralContainer>
@@ -21,6 +23,7 @@ export const Navbar = () => {
             <ProfileName>Alonso Conde</ProfileName>
             <SelectDropdown />
           </ProfileData>
+          <Logout onClick={() => logout()}>Log Out</Logout>
         </ProfileWrapper>
         <LogoWrapper>
           <Logo />
@@ -82,6 +85,20 @@ const ProfileData = styled.div`
   align-items: flex-start;
   color: ${theme.palette.text.white};
   gap: 8px;
+`
+
+const Logout = styled.button`
+  padding: 8px 12px;
+  background-color: ${theme.palette.primary.zero};
+  border-radius: 12px;
+  color: white;
+  text-align: center;
+  border: none;
+  outline: none;
+
+  &:hover {
+    background-color: ${theme.palette.primary.plus1};
+  }
 `
 
 const ProfileName = styled.h4`

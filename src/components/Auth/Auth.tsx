@@ -5,6 +5,13 @@ import { Logo } from '../../assets/Logo'
 import backImage from './loginback.png'
 import { theme } from '../../theme/globalStyle'
 import axios from 'axios'
+import {
+  StyledHelper,
+  StyledInput,
+  StyledLabel,
+  SubmitButton,
+  SubmitWrapper,
+} from '../../common/styled'
 
 interface AuthProps {
   children: React.ReactElement
@@ -97,58 +104,4 @@ const LoginCard = styled.form`
 
 const LogoWrapper = styled.div`
   width: 330px;
-`
-
-const StyledLabel = styled.label`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-`
-
-const StyledHelper = styled.h4`
-  color: ${theme.palette.text.gray};
-`
-
-const StyledInput = styled.input`
-  width: 100%;
-  height: 48px;
-  padding: 0px 16px;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 18px;
-  background-color: ${theme.palette.black.minus4};
-  color: ${theme.palette.text.gray};
-  border: none;
-  outline: none;
-
-  &::placeholder {
-    color: ${theme.palette.text.grayPlusOne};
-  }
-
-  &:hover,
-  &:focus {
-  }
-`
-
-const SubmitWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: flex-start;
-`
-
-const SubmitButton = styled.button`
-  background-color: ${theme.palette.primary.zero};
-  border-radius: 12px;
-  color: ${theme.palette.text.white};
-  padding: 12px 32px;
-  outline: none;
-  border: none;
-
-  &:hover,
-  &:focus {
-    cursor: pointer;
-    background-color: ${theme.palette.primary.plus1};
-  }
 `

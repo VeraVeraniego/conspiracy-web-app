@@ -35,7 +35,7 @@ export const Auth = ({ children }: AuthProps) => {
 
   const loginRequest = async (data: LoginRequest) => {
     const response = await axios.post<LoginResponse>(
-      `http://localhost:8080/login`,
+      `http://127.0.0.1:8080/login`,
       { username: data.username, password: data.password }
     )
 

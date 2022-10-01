@@ -9,6 +9,7 @@ import {
   SubmitButton,
   SubmitWrapper,
 } from '../../common/styled'
+import { useScore } from '../../context/Score'
 import { useUser } from '../../context/User'
 import { theme } from '../../theme/globalStyle'
 const channels = ['Arequipa', 'Peru', 'Lima', 'El Salvador', 'RAVN']
@@ -18,6 +19,7 @@ export const CreateEvent = () => {
   const [eventDate, setEventDate] = useState('')
   const navigate = useNavigate()
   const { userLogged } = useUser()
+  const { updateScore } = useScore()
 
   async function submitHandler(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -31,6 +33,7 @@ export const CreateEvent = () => {
           channel: channel,
         })
         console.log('response', response)
+        updateScore(userLogged.userID)
         if (response.data) navigate('/')
       }
     } catch (error) {

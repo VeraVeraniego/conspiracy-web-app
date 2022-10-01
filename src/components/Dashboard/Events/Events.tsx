@@ -10,6 +10,7 @@ import axios from 'axios'
 import { useUser } from '../../../context/User'
 import { useChannel } from '../../../context/Channel'
 import { useNavigate } from 'react-router-dom'
+import { useScore } from '../../../context/Score'
 
 type Event = {
   id: string
@@ -25,6 +26,8 @@ export const Events = () => {
   const [activeMenu, setActiveMenu] = useState<'myEvents' | 'comming' | 'past'>(
     'myEvents'
   )
+
+  const { updateScore } = useScore()
 
   const [events, setEvents] = useState<Event[] | []>([])
   const [eventsJoined, setEventsJoined] = useState<Event[] | []>([])
@@ -43,6 +46,7 @@ export const Events = () => {
       (item) => item.channel === channel
     )
     setEvents(filteredEvents)
+    updateScore(userId)
   }
 
   function addWeeks(numOfWeeks: number, date = new Date()) {
@@ -62,6 +66,7 @@ export const Events = () => {
 
     setEvents(response.data)
     setEventsJoined(newEventsJoined.data)
+    updateScore(userId)
   }
 
   const pastEventsRequest = async () => {
@@ -83,6 +88,9 @@ export const Events = () => {
     })
 
     setEventsJoined([...eventsJoined, response.data])
+    if (userLogged) {
+      updateScore(userLogged.userID)
+    }
   }
 
   useEffect(() => {

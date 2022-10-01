@@ -1,14 +1,14 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import styled from 'styled-components'
 import { theme } from '../../theme/globalStyle'
 import { Logo } from '../../assets/Logo'
 import placeholderImage from '../../assets/images/profileplaceholder.png'
 import { SelectDropdown } from './SelectDropdown'
-import { useUser } from '../../context/User'
+import { useScore } from '../../context/Score'
 
 export const Navbar = () => {
-  const { userLogged } = useUser()
+  const { score } = useScore()
 
   return (
     <NavbarGeneralContainer>
@@ -27,7 +27,7 @@ export const Navbar = () => {
         </LogoWrapper>
         <ScoreWrapper>
           <Score>
-            <h2>My Score: 50pt</h2>
+            <h2>My Score: {score}pt</h2>
           </Score>
         </ScoreWrapper>
       </NavbarWrapper>

@@ -26,8 +26,6 @@ const mockedLeaderboard: UserLeaderboard[] = [
 export const Leaderboard = () => {
   function printLeaders(userArray: UserLeaderboard[]) {
     const top3Users = userArray.slice(0, 3)
-    const slicedArray = userArray.slice(3, userArray.length)
-    console.log(slicedArray)
     return (
       <>
         <FirstPlace>

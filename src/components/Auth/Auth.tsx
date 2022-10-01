@@ -13,6 +13,16 @@ import {
   SubmitWrapper,
 } from '../../common/styled'
 
+export interface LoginRequest {
+  username: string
+  password: string
+}
+
+interface LoginResponse {
+  fullName: string
+  id: string
+}
+
 interface AuthProps {
   children: React.ReactElement
 }
@@ -21,10 +31,27 @@ export const Auth = ({ children }: AuthProps) => {
   const { userLogged, login } = useUser()
   const [userEmail, setUserEmail] = useState('')
   const [userPassword, setUserPassword] = useState('')
+  const [error, setError] = useState(false)
+
+  const loginRequest = async (data: LoginRequest) => {
+    const response = await axios.post<LoginResponse>(
+      `https://fda5-190-237-34-153.ngrok.io/login`,
+      { username: data.username, password: data.password }
+    )
+
+    login({ userID: response.data.id, username: response.data.fullName })
+  }
 
   const onLoginSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    login({ userID: '01aft', username: 'Jhon' })
+    try {
+      loginRequest({
+        username: userEmail,
+        password: userPassword,
+      })
+    } catch (error) {
+      setError(true)
+    }
   }
 
   if (userLogged) {

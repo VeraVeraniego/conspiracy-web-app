@@ -8,8 +8,8 @@
   "plugins": ["react", "@typescript-eslint"],
   "rules": {
     "indent": ["error", 2],
-    "quotes": ["error", "double"],
-    "semi": ["error", "always"],
+    // "quotes": ["error", "double"],
+    // "semi": ["error", "always"],
     "block-spacing": ["error", "always"],
     "space-before-blocks": "error",
     "react/react-in-jsx-scope": "off"

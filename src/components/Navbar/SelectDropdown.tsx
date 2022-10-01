@@ -2,10 +2,11 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { theme } from '../../theme/globalStyle'
 import { ArrowDown } from './ArrowDown'
+import { useChannel } from '../../context/Channel'
 
 export const SelectDropdown = () => {
   const [isOptionsOpen, setIsOptionsOpen] = useState(false)
-  const [selectedOption, setSelectedOption] = useState(0)
+  const { channel, selectChannel } = useChannel()
 
   const optionsList = ['Arequipa', 'El Salvador', 'RAVN']
 
@@ -21,14 +22,14 @@ export const SelectDropdown = () => {
         aria-expanded={isOptionsOpen}
         onClick={toggleOptions}
       >
-        <h4>{optionsList[selectedOption]}</h4>
+        <h4>{channel}</h4>
         <ArrowDown />
       </SelectButton>
       <SelectItemsWrapper
         isOptionsOpen={isOptionsOpen}
         className={`options ${isOptionsOpen ? 'show' : ''}`}
         role="listbox"
-        aria-activedescendant={optionsList[selectedOption]}
+        aria-activedescendant={channel}
         tabIndex={-1}
       >
         {optionsList.map((option, index) => (
@@ -36,10 +37,10 @@ export const SelectDropdown = () => {
             key={`${index}-${option}`}
             id={option}
             role="option"
-            aria-selected={selectedOption == index}
+            aria-selected={channel === option}
             tabIndex={0}
             onClick={() => {
-              setSelectedOption(index)
+              selectChannel(option)
               setIsOptionsOpen(false)
             }}
           >

@@ -35,7 +35,7 @@ export const Auth = ({ children }: AuthProps) => {
 
   const loginRequest = async (data: LoginRequest) => {
     const response = await axios.post<LoginResponse>(
-      `https://fda5-190-237-34-153.ngrok.io/login`,
+      `https://97b6-190-237-34-153.ngrok.io/login`,
       { username: data.username, password: data.password }
     )
 

@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { theme } from '../../theme/globalStyle'
 import { Logo } from '../../assets/Logo'
 import placeholderImage from '../../assets/images/profileplaceholder.png'
+import { SelectDropdown } from './SelectDropdown'
 
 export const Navbar = () => {
   return (
@@ -15,14 +16,16 @@ export const Navbar = () => {
           </ProfileImage>
           <ProfileData>
             <ProfileName>Alonso Conde</ProfileName>
-            <ChannelDropdown>Arequipa</ChannelDropdown>
+            <SelectDropdown />
           </ProfileData>
         </ProfileWrapper>
         <LogoWrapper>
           <Logo />
         </LogoWrapper>
         <ScoreWrapper>
-          <h2>My Score: 50pt</h2>
+          <Score>
+            <h2>My Score: 50pt</h2>
+          </Score>
         </ScoreWrapper>
       </NavbarWrapper>
       <Outlet />
@@ -50,8 +53,9 @@ const NavbarWrapper = styled.div`
 `
 
 const ProfileWrapper = styled.div`
+  width: 300px;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   gap: 16px;
 `
@@ -81,10 +85,6 @@ const ProfileName = styled.h4`
   font-weight: 300;
 `
 
-const ChannelDropdown = styled.h4`
-  font-weight: 700;
-`
-
 const LogoWrapper = styled.div`
   width: 180px;
   display: flex;
@@ -93,6 +93,13 @@ const LogoWrapper = styled.div`
 `
 
 const ScoreWrapper = styled.div`
+  width: 300px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+`
+
+const Score = styled.div`
   background-color: ${theme.palette.black.minus4};
   border-radius: 50px;
   padding: 16px 32px;

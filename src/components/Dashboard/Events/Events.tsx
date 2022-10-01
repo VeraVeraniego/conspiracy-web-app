@@ -108,9 +108,9 @@ export const Events = () => {
               <CardUserInfoPoints>
                 +{event.plannerId === userLogged?.userID ? '5' : '1'}pt
               </CardUserInfoPoints>
-              <CadrUserInfoPicture>
+              <CardUserInfoPicture>
                 <img src={profileImage} />
-              </CadrUserInfoPicture>
+              </CardUserInfoPicture>
               <CardUserEventInfo>
                 <h3>
                   {event.name} •

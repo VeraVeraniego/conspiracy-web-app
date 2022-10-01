@@ -7,7 +7,11 @@ import profileImage2 from '../../../assets/images/profile2.png'
 import profileImage3 from '../../../assets/images/profile3.png'
 import { CardUserInfoPicture } from '../Events/Events'
 
-const mockedLeaderboard = [
+interface UserLeaderboard {
+  name: string
+  points: number
+}
+const mockedLeaderboard: UserLeaderboard[] = [
   { name: 'Luisa', points: 150 },
   { name: 'Gonzalo', points: 137 },
   { name: 'Brayan', points: 130 },
@@ -17,11 +21,46 @@ const mockedLeaderboard = [
   { name: 'Gerardo', points: 74 },
   { name: 'Kevin', points: 69 },
   { name: 'Alonso', points: 42 },
-  { name: 'Nikol', points: 10 },
-  { name: 'Ricardo', points: 9 },
 ]
 
 export const Leaderboard = () => {
+  function printLeaders(userArray: UserLeaderboard[]) {
+    const top3Users = userArray.slice(0, 3)
+    const slicedArray = userArray.slice(3, userArray.length)
+    console.log(slicedArray)
+    return (
+      <>
+        <FirstPlace>
+          <Points top>{top3Users[1].points} pt</Points>
+          <CardUserInfoPicture size={64}>
+            <img src={profileImage2} />
+          </CardUserInfoPicture>
+          <Name top>{top3Users[1].name}</Name>
+          <Position top>2</Position>
+          <Podium />
+        </FirstPlace>
+        <FirstPlace>
+          <Points top>{top3Users[0].points} pt</Points>
+          <CardUserInfoPicture size={80}>
+            <img src={profileImage} />
+          </CardUserInfoPicture>
+          <Name top>{top3Users[0].name}</Name>
+          <Position top>1</Position>
+          <Podium />
+        </FirstPlace>
+        <FirstPlace>
+          <Points top>{top3Users[2].points} pt</Points>
+          <CardUserInfoPicture size={56}>
+            <img src={profileImage3} />
+          </CardUserInfoPicture>
+          <Name top>{top3Users[2].name}</Name>
+          <Position top>3</Position>
+          <Podium />
+        </FirstPlace>
+      </>
+    )
+  }
+
   return (
     <AsideWrapper>
       <Row1>
@@ -33,62 +72,21 @@ export const Leaderboard = () => {
         <SortButton>Week</SortButton>
         <SortButton>Month</SortButton>
       </ButtonWrapper>
-      <ScoreBoardWrapper>
-        <FirstPlace>
-          <Points top>120 pt</Points>
-          <CardUserInfoPicture size={64}>
-            <img src={profileImage2} />
-          </CardUserInfoPicture>
-          <Name top>Gonzalo</Name>
-          <Position top>2</Position>
-          <Podium />
-        </FirstPlace>
-
-        <FirstPlace>
-          <Points top>150 pt</Points>
-          <CardUserInfoPicture size={80}>
-            <img src={profileImage} />
-          </CardUserInfoPicture>
-          <Name top>Luisa</Name>
-          <Position top>1</Position>
-          <Podium />
-        </FirstPlace>
-
-        <FirstPlace>
-          <Points top>115 pt</Points>
-          <CardUserInfoPicture size={56}>
-            <img src={profileImage3} />
-          </CardUserInfoPicture>
-          <Name top>Brayan</Name>
-          <Position top>3</Position>
-          <Podium />
-        </FirstPlace>
-      </ScoreBoardWrapper>
+      <ScoreBoardWrapper>{printLeaders(mockedLeaderboard)}</ScoreBoardWrapper>
       {/* from 4 to 6 */}
-      <ClasificationRow>
-        <Position>4</Position>
-        <CardUserInfoPicture>
-          <img src={profileImage} />
-        </CardUserInfoPicture>
-        <Name>Luisa</Name>
-        <Points>50 pt</Points>
-      </ClasificationRow>
-      <ClasificationRow>
-        <Position>5</Position>
-        <CardUserInfoPicture>
-          <img src={profileImage2} />
-        </CardUserInfoPicture>
-        <Name>Gonzalo</Name>
-        <Points>46 pt</Points>
-      </ClasificationRow>
-      <ClasificationRow>
-        <Position>6</Position>
-        <CardUserInfoPicture>
-          <img src={profileImage3} />
-        </CardUserInfoPicture>
-        <Name>Brayan</Name>
-        <Points>40 pt</Points>
-      </ClasificationRow>
+
+      {mockedLeaderboard
+        .slice(3, mockedLeaderboard.length)
+        .map((user: UserLeaderboard, index) => (
+          <ClasificationRow key={user.name + index}>
+            <Position>{index + 4}</Position>
+            <CardUserInfoPicture>
+              <img src={profileImage} />
+            </CardUserInfoPicture>
+            <Name>{user.name}</Name>
+            <Points>{user.points} pt</Points>
+          </ClasificationRow>
+        ))}
     </AsideWrapper>
   )
 }
@@ -175,6 +173,7 @@ const Title = styled.h4`
 `
 
 const AsideWrapper = styled(Wrapper)`
+  overflow: scroll;
   padding: 16px 32px 16px 32px;
   flex-direction: column;
   justify-content: flex-start;

@@ -90,7 +90,7 @@ export const Leaderboard = () => {
 }
 
 const FirstPlace = styled.div`
-  width: 102px;
+  width: 30%;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -151,10 +151,11 @@ const Podium = styled.div`
   }
 `
 const ScoreBoardWrapper = styled.div`
+  width: 100%;
   margin-top: 32px;
   display: flex;
   flex-direction: row;
-  gap: 48px;
+  justify-content: space-between;
 `
 const Row1 = styled.div`
   width: 100%;

@@ -10,6 +10,7 @@ import axios from 'axios'
 import { useUser } from '../../../context/User'
 import { useChannel } from '../../../context/Channel'
 import { useNavigate } from 'react-router-dom'
+import { useScore } from '../../../context/Score'
 
 type Event = {
   id: string
@@ -26,7 +27,11 @@ export const Events = () => {
     'myEvents'
   )
 
+  const { updateScore } = useScore()
+
   const [events, setEvents] = useState<Event[] | []>([])
+  const [eventsJoined, setEventsJoined] = useState<Event[] | []>([])
+  console.log(eventsJoined)
 
   const { userLogged } = useUser()
   const { channel } = useChannel()
@@ -35,12 +40,13 @@ export const Events = () => {
 
   const myEventsRequest = async (userId: string) => {
     const response = await axios.get<Event[]>(
-      `http://127.0.0.1:8080/my-events?userId=${userId}`
+      `http://127.0.0.1:8080/event-subscriptions?userId=${userId}`
     )
     const filteredEvents = response.data.filter(
       (item) => item.channel === channel
     )
     setEvents(filteredEvents)
+    updateScore(userId)
   }
 
   function addWeeks(numOfWeeks: number, date = new Date()) {
@@ -49,19 +55,42 @@ export const Events = () => {
     return date
   }
 
-  const comingEventsRequest = async () => {
+  const comingEventsRequest = async (userId: string) => {
     const response = await axios.get<Event[]>(`http://127.0.0.1:8080/list`, {
       params: { startDate: new Date(), endDate: addWeeks(2), channel: channel },
     })
-    console.log(response.data)
+
+    const newEventsJoined = await axios.get<Event[]>(
+      `http://127.0.0.1:8080/event-subscriptions?userId=${userId}`
+    )
+
+    setEvents(response.data)
+    setEventsJoined(newEventsJoined.data)
+    updateScore(userId)
+  }
+
+  const pastEventsRequest = async () => {
+    const response = await axios.get<Event[]>(`http://127.0.0.1:8080/list`, {
+      params: {
+        startDate: addWeeks(-2),
+        endDate: new Date(),
+        channel: channel,
+      },
+    })
+
     setEvents(response.data)
   }
 
   const joinEvent = async (eventId: string) => {
     const response = await axios.post<Event>(`http://127.0.0.1:8080/attend`, {
       eventId,
-      userId: userLogged,
+      userId: userLogged?.userID,
     })
+
+    setEventsJoined([...eventsJoined, response.data])
+    if (userLogged) {
+      updateScore(userLogged.userID)
+    }
   }
 
   useEffect(() => {
@@ -69,7 +98,10 @@ export const Events = () => {
       myEventsRequest(userLogged.userID)
     }
     if (activeMenu === 'comming' && userLogged) {
-      comingEventsRequest()
+      comingEventsRequest(userLogged.userID)
+    }
+    if (activeMenu === 'past') {
+      pastEventsRequest()
     }
   }, [activeMenu, channel])
 
@@ -89,7 +121,10 @@ export const Events = () => {
           >
             <h2>Coming Events</h2>
           </EventsNavbarElement>
-          <EventsNavbarElement isActive={activeMenu === 'past'}>
+          <EventsNavbarElement
+            onClick={() => setActiveMenu('past')}
+            isActive={activeMenu === 'past'}
+          >
             <h2>Past Events</h2>
           </EventsNavbarElement>
         </EventsNavbarList>
@@ -137,12 +172,21 @@ export const Events = () => {
               </EventCardAssitantsWrapper>
               {activeMenu === 'comming' ? (
                 <EventCardAssistantJoinButton
-                  disabled={event.plannerId === userLogged?.userID}
-                  onClick={() => console.log('exec')}
-                  joined={event.plannerId === userLogged?.userID}
+                  disabled={
+                    eventsJoined.filter((item) => item.id === event.id).length >
+                    0
+                  }
+                  onClick={() => joinEvent(event.id)}
+                  joined={
+                    eventsJoined.filter((item) => item.id === event.id).length >
+                    0
+                  }
                 >
                   <h4>
-                    {event.plannerId === userLogged?.userID ? 'Joined' : 'Join'}
+                    {eventsJoined.filter((item) => item.id === event.id)
+                      .length > 0
+                      ? 'Joined'
+                      : 'Join'}
                   </h4>
                 </EventCardAssistantJoinButton>
               ) : (
@@ -324,5 +368,9 @@ const EventCardAssistantJoinButton = styled.button<{ joined: boolean }>`
     props.joined &&
     `
 		 background-color: ${theme.palette.success.zero};
+		 &:hover {
+			background-color: ${theme.palette.success.zero};
+			cursor: default;
+		 }
 	`}
 `

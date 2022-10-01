@@ -73,6 +73,7 @@ export const Auth = ({ children }: AuthProps) => {
               value={userEmail}
               onChange={(event) => setUserEmail(event.target.value)}
               placeholder="huginn@ravn.co"
+              required
             />
           </StyledLabel>
           <StyledLabel>
@@ -82,6 +83,7 @@ export const Auth = ({ children }: AuthProps) => {
               value={userPassword}
               onChange={(event) => setUserPassword(event.target.value)}
               placeholder="write your password here"
+              required
             />
           </StyledLabel>
           <SubmitWrapper>

@@ -4,6 +4,8 @@ import { useUser } from '../../context/User'
 import { Logo } from '../../assets/Logo'
 import backImage from './loginback.png'
 import { theme } from '../../theme/globalStyle'
+import axios from 'axios'
+
 interface AuthProps {
   children: React.ReactElement
 }
@@ -137,9 +139,16 @@ const SubmitWrapper = styled.div`
 `
 
 const SubmitButton = styled.button`
-  background-color: transparent;
-  border: 2px solid ${theme.palette.primary.zero};
+  background-color: ${theme.palette.primary.zero};
   border-radius: 12px;
-  color: ${theme.palette.primary.zero};
+  color: ${theme.palette.text.white};
   padding: 12px 32px;
+  outline: none;
+  border: none;
+
+  &:hover,
+  &:focus {
+    cursor: pointer;
+    background-color: ${theme.palette.primary.plus1};
+  }
 `

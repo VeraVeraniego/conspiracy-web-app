@@ -1,12 +1,17 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import styled from 'styled-components'
 import { theme } from '../../theme/globalStyle'
 import { Logo } from '../../assets/Logo'
 import placeholderImage from '../../assets/images/profileplaceholder.png'
 import { SelectDropdown } from './SelectDropdown'
+import { useScore } from '../../context/Score'
+import { useUser } from '../../context/User'
 
 export const Navbar = () => {
+  const { score } = useScore()
+  const { logout } = useUser()
+
   return (
     <NavbarGeneralContainer>
       <NavbarWrapper>
@@ -18,13 +23,14 @@ export const Navbar = () => {
             <ProfileName>Alonso Conde</ProfileName>
             <SelectDropdown />
           </ProfileData>
+          <Logout onClick={() => logout()}>Log Out</Logout>
         </ProfileWrapper>
         <LogoWrapper>
           <Logo />
         </LogoWrapper>
         <ScoreWrapper>
           <Score>
-            <h2>My Score: 50pt</h2>
+            <h2>My Score: {score}pt</h2>
           </Score>
         </ScoreWrapper>
       </NavbarWrapper>
@@ -79,6 +85,20 @@ const ProfileData = styled.div`
   align-items: flex-start;
   color: ${theme.palette.text.white};
   gap: 8px;
+`
+
+const Logout = styled.button`
+  padding: 8px 12px;
+  background-color: ${theme.palette.primary.zero};
+  border-radius: 12px;
+  color: white;
+  text-align: center;
+  border: none;
+  outline: none;
+
+  &:hover {
+    background-color: ${theme.palette.primary.plus1};
+  }
 `
 
 const ProfileName = styled.h4`

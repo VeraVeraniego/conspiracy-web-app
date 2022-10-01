@@ -2,6 +2,7 @@ import axios from 'axios'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
+import { API_URL } from '../../common/constants'
 import {
   StyledHelper,
   StyledInput,
@@ -9,29 +10,33 @@ import {
   SubmitButton,
   SubmitWrapper,
 } from '../../common/styled'
+import { useScore } from '../../context/Score'
+import { useUser } from '../../context/User'
 import { theme } from '../../theme/globalStyle'
-const channels = ['Arequipa', 'Perú', 'Lima', 'El Salvador']
+const channels = ['Arequipa', 'Peru', 'Lima', 'El Salvador', 'RAVN']
 export const CreateEvent = () => {
   const [eventName, setEventName] = useState('')
   const [channel, setChannel] = useState('')
   const [eventDate, setEventDate] = useState('')
   const navigate = useNavigate()
+  const { userLogged } = useUser()
+  const { updateScore } = useScore()
 
   async function submitHandler(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     console.log(eventName, channel, eventDate)
     try {
-      const response = await axios.post(
-        `https://fda5-190-237-34-153.ngrok.io/createEvent`,
-        {
+      if (userLogged) {
+        const response = await axios.post(`${API_URL}/createEvent`, {
           eventName: eventName,
           eventDate: eventDate,
-          eventPlanner: 'b1b7d495-80df-4bfe-95ea-07f89e584adb',
+          eventPlanner: userLogged.userID,
           channel: channel,
-        }
-      )
-      console.log('response', response)
-      if (response.data) navigate('/')
+        })
+        console.log('response', response)
+        updateScore(userLogged.userID)
+        if (response.data) navigate('/')
+      }
     } catch (error) {
       const err = error as Error
       console.error(err.message)
@@ -67,13 +72,14 @@ export const CreateEvent = () => {
       <StyledLabel>
         <StyledHelper>Date</StyledHelper>
         <StyledInput
-          type="date"
+          type="datetime-local"
+          min={new Date().toISOString().split('T')[0] + 'T00:00:00.00'}
           onChange={(e) => setEventDate(e.target.value)}
           required
         />
       </StyledLabel>
       <ButtonWrapper>
-        <CancelButton type="reset">Cancel</CancelButton>
+        <CancelButton onClick={() => navigate('/')}>Cancel</CancelButton>
         <SubmitButton type="submit">Create Event</SubmitButton>
       </ButtonWrapper>
     </FormWrapper>
@@ -100,7 +106,9 @@ const ButtonWrapper = styled(SubmitWrapper)`
   gap: 16px;
 `
 const FormWrapper = styled.form`
-  padding-top: 214px;
+  display: flex;
+  justify-content: center;
+  flex: 1;
   width: 512px;
   display: flex;
   flex-direction: column;

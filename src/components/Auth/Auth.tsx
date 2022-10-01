@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import { useUser } from '../../context/User'
 import { Logo } from '../../assets/Logo'
 import backImage from './loginback.png'
-import { theme } from '../../theme/globalStyle'
 import axios from 'axios'
 import {
   StyledHelper,
@@ -11,7 +10,9 @@ import {
   StyledLabel,
   SubmitButton,
   SubmitWrapper,
+  Wrapper,
 } from '../../common/styled'
+import { API_URL } from '../../common/constants'
 
 export interface LoginRequest {
   username: string
@@ -34,10 +35,10 @@ export const Auth = ({ children }: AuthProps) => {
   const [error, setError] = useState(false)
 
   const loginRequest = async (data: LoginRequest) => {
-    const response = await axios.post<LoginResponse>(
-      `https://97b6-190-237-34-153.ngrok.io/login`,
-      { username: data.username, password: data.password }
-    )
+    const response = await axios.post<LoginResponse>(`${API_URL}/login`, {
+      username: data.username,
+      password: data.password,
+    })
 
     login({ userID: response.data.id, username: response.data.fullName })
   }
@@ -59,7 +60,7 @@ export const Auth = ({ children }: AuthProps) => {
   }
 
   return (
-    <AuthWrapper>
+    <Wrapper>
       <ImageWrapper />
       <LoginCardWrapper>
         <LoginCard method="POST" onSubmit={onLoginSubmit}>
@@ -93,16 +94,9 @@ export const Auth = ({ children }: AuthProps) => {
           </SubmitWrapper>
         </LoginCard>
       </LoginCardWrapper>
-    </AuthWrapper>
+    </Wrapper>
   )
 }
-const AuthWrapper = styled.div`
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`
 
 const ImageWrapper = styled.div`
   flex: 1;
